@@ -26,6 +26,7 @@ class Event(TypedDict):
     photos: list[str]
     text: str
     community: str
+    community_title: str
     post_id: int
 
 load_dotenv()
@@ -186,9 +187,10 @@ def photos(post: Post) -> list[str]:
 def event_from_post(community: str, post: Post) -> Event:
     return {
         "post_id": post["id"],
-        "community": COMMUNITIES[community],
+        "community": community,
+        "community_title": COMMUNITIES[community],
         "text": post["text"],
-        "photos": photos(post)
+        "photos": photos(post),
     }
 
 def add_posts(community: str, posts: list[Post], events: dict[int, dict[int, dict[int, list[Event]]]]):
