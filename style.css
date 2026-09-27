@@ -61,7 +61,7 @@ body {
 }
 
 .content {
-    margin-top: 70px;
+    margin: 70px 0;
     width: 100%;
     background-color: #4400d5; /* Цвет из Figma */
     .rounded-content {
