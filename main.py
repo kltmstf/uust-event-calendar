@@ -178,7 +178,7 @@ def photos(post: Post) -> list[str]:
         if attachment["type"] == "photo":
             photo = attachment["photo"]
             url = max(
-                photo["sizes"],
+                (x for x in photo["sizes"] if x["width"] <= 700),
                 key=lambda s: s["width"] * s["height"]
             )["url"]
             result.append(url)

@@ -61,25 +61,31 @@ function showPosts(posts) {
           }
           const imgCopy = imgEl.cloneNode();
           const backgroundCopy = backgroundEl.cloneNode();
+          imgCopy.addEventListener(
+            "load",
+            () => {
+              backgroundCopy.style.opacity = 0;
+              photoEl.appendChild(imgCopy);
+              photoEl.appendChild(backgroundCopy);
+              imgEl.style.left = dir == -1 ? "100%" : "-0%";
+              imgCopy.style.left = dir == -1 ? "-100%" : "100%";
+              setTimeout(() => {
+                imgCopy.style.left = "0%";
+                imgEl.style.left = dir == -1 ? "100%" : "-100%";
+                backgroundCopy.style.opacity = 1;
+                backgroundEl.style.opacity = 0;
+              }, 100);
+              setTimeout(() => {
+                imgEl.remove();
+                imgEl = imgCopy;
+                backgroundEl.remove();
+                backgroundEl = backgroundCopy;
+              }, 600);
+            },
+            { once: true },
+          );
           setImage(imgCopy, current);
           setImage(backgroundCopy, current);
-          backgroundCopy.style.opacity = 0;
-          photoEl.appendChild(imgCopy);
-          photoEl.appendChild(backgroundCopy);
-          imgEl.style.left = dir == -1 ? "100%" : "-0%";
-          imgCopy.style.left = dir == -1 ? "-100%" : "100%";
-          setTimeout(() => {
-            imgCopy.style.left = "0%";
-            imgEl.style.left = dir == -1 ? "100%" : "-100%";
-            backgroundCopy.style.opacity = 1;
-            backgroundEl.style.opacity = 0;
-          }, 100);
-          setTimeout(() => {
-            imgEl.remove();
-            imgEl = imgCopy;
-            backgroundEl.remove();
-            backgroundEl = backgroundCopy;
-          }, 600);
         }
         let hovered = false;
 
@@ -87,7 +93,7 @@ function showPosts(posts) {
           if (!hovered) {
             rotate(+1);
           }
-        }, 5000);
+        }, 10000);
 
         photoEl.addEventListener("mouseenter", () => {
           hovered = true;
@@ -111,15 +117,15 @@ function showPosts(posts) {
 document.addEventListener("DOMContentLoaded", () => {
   showPosts([
     {
-      community: "uustufa",
-      community_title: "УУНиТ",
+      community: "career.uust",
+      community_title: "Центр карьеры",
       photos: [
-        "https://sun9-56.userapi.com/s/v1/ig2/4Tnd4WpS5RW_5fMFnCHpfXL8k4zuR1zdZuqOS4OKuFl2AJvzswOtTjSKIv5qsRXLEmiIzY9NrsBOjU368yn_FB58.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280,1440x1440,2000x2000&from=bu&cs=2000x0",
-        "https://sun9-54.userapi.com/s/v1/ig2/OjfHliNWIldmBi6WsUhRVKYVkny_QPpZpEJBAWI_pkNCAf7Nbap7msduXMTYebtm04JuO2sInniVnwnGKuxLT_y3.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1179x1179&from=bu&cs=1179x0",
-        "https://sun9-84.userapi.com/s/v1/ig2/Dyh4qW18OyIejCcmq8MRQbEcGSczyByAiRLhNreyUJCClt6cU77-f2mUYT9b3c6x2fPYJ0JtMyyp_4bNmxtNm7JG.jpg?quality=95&crop=0,0,2560,1440&as=32x18,48x27,72x40,108x61,160x90,240x135,360x202,480x270,540x304,640x360,720x405,1080x607,1280x720,1440x810,2560x1440&from=bu&cs=2560x0",
+        "https://sun9-12.userapi.com/s/v1/ig2/kVlCzXR6so3LYolrLg2gdUApZWEcoDeRl-E8AB6FKCYi5gBcynNIrBSBFx10BAblIzjxhtPza2g1EGguUffXaYR1.jpg?quality=95&as=32x21,48x32,72x48,108x72,160x106,240x160,360x239,480x319,540x359,640x426,720x479,1080x718,1280x851,1440x958,2560x1703&from=bu&cs=640x0",
+        "https://sun9-66.userapi.com/s/v1/ig2/1P3ZfyZ0zI8Sa4fuVvE5S2sRhe6Kr1Le4XvqEIn6EDqJu_0d6NTg6ZGQ2FB5gPMNrgvLoUIjeXQUH5DtDGSz4UlR.jpg?quality=95&as=32x21,48x32,72x48,108x72,160x106,240x160,360x239,480x319,540x359,640x426,720x479,1080x718,1280x851,1440x958,2560x1703&from=bu&cs=640x0",
+        "https://sun9-78.userapi.com/s/v1/ig2/YDj91Z_JzZvNAeDxMr2RoGfDxjggu4Ootrfe__WOWt4p4GkslNhkiocugrmDAkWZpK_38tkPCKqtCGtDVCACv7E9.jpg?quality=95&as=32x21,48x32,72x48,108x72,160x107,240x160,360x240,480x320,540x360,640x427,720x480,1080x720,1280x853,1440x960,2560x1707&from=bu&cs=640x0",
       ],
-      post_id: 191332,
-      text: "🎓Сегодня тот самый день!\n\n7 августа до 23:59 (МСК) будут опубликованы приказы о зачислении на бюджет в рамках основного этапа на программы бакалавриата и специалитета.\n\nПроверить приказы можно по ссылке: https://uust.ru/admission/bachelor-and-specialist/enrollment-orders/2026/?ysclid=msd12c61zw281888449\n\nКак проходит ваше ожидание?\n❤️ Жду спокойно ⚡️Обновляю сайт каждые 5 минут 🔥 Уже чувствую себя студентом",
+      post_id: 11378,
+      text: "🍂 Осень в Образовательном центре «Сириус» \n \n⏰ Важные даты: \n— Последний день подачи заявок — 3 августа 2026 года \n— Заезд в Центр — ориентировочно 20 августа 2026 года \n \nМы предлагаем: \n✧ Официальное трудоустройство по трудовому договору \n✧ Проживание в комфортабельном гостиничном комплексе на побережье Черного моря (Федеральная территория «Сириус») \n✧ Гибкий сменный график работы \n✧ Конкурентную заработную плату: \n— Вожатый — 44 000 руб. (до вычета НДФЛ) \n— Дежурный администратор (ночной вожатый) — 43 000 (до вычета НДФЛ) \n— Старший вожатый — 55 000 руб. (до вычета НДФЛ) \n \nВаши задачи: \n📌 Сопровождать группу участников на протяжении всей интенсивной профильной программы \n📌 Обеспечивать безопасность детей как на территории кампуса, так и за его пределами \n📌 Контролировать соблюдение распорядка дня \n📌 Организовывать содержательный досуг: командные мероприятия и занятия в свободное от учёбы и тренировок время \n \nТребования к кандидатам: \n🎓 Вы — студент старших курсов или уже имеете оконченное образование (любого профиля подготовки) \n🎒 У вас есть педагогический опыт \n📅 Готовы к работе на период от 2 месяцев \n \n‼ Как принять участие? \n \nПерейдите по ссылке, зарегистрируйтесь и заполните заявку на платформе siriuskurator.ru \n \nЕсли вы рассматриваете более ранний заезд, свяжитесь с нами напрямую: \n→ vk.com/proskurin_artem \n→ vk.com/irina_kuratorr \n \nПрисоединяйтесь к команде, которая вдохновляет будущее!",
     },
     {
       community: "uustufa",
