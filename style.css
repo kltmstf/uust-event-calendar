@@ -13,7 +13,6 @@ body {
     top: 130px;
     right: 50px;
     width: 350px;
-    margin-left: auto;
     flex-shrink: 0;
 }
 
@@ -61,12 +60,28 @@ body {
     color: #ea591f;
 }
 
-main {
-    width: 660px;
-    margin: 130px auto 0 auto;
+.content {
+    margin-top: 70px;
+    width: 100%;
+    background-color: #4400d5; /* Цвет из Figma */
+    .rounded-content {
+        border-radius: 22px 22px 0 0;
+        background-color: #ffffff;
+        width: 100%;
+        height: 100%;
+        padding-top: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 70px;
+        * {
+            background-color: unset;
+        }
+    }
 }
 
 .post {
+    width: 660px;
     margin-bottom: 80px;
 
     .date {
@@ -104,6 +119,7 @@ main {
             background-position: center;
             background-repeat: no-repeat;
             backdrop-filter: blur(4px);
+            z-index: 4;
 
             opacity: 0;
             transition: opacity .5s;
@@ -114,7 +130,7 @@ main {
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: 3;
             backdrop-filter:  blur(40px);
         }
         img {
@@ -131,7 +147,7 @@ main {
             height: 100%;
             display: flex;
             flex-direction: row;
-            z-index: -1;
+            z-index: 3;
             transition: left .5s linear;
             img {
                 object-fit: contain;
@@ -143,7 +159,7 @@ main {
             position: absolute;
             top: 0;
             left: 0;
-            z-index: -3;
+            z-index: 1;
             img {
                 position: absolute;
                 top: 0;
@@ -187,7 +203,6 @@ main {
     align-items: center;
     padding: 0 48px;
     z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .logo-container {
@@ -204,10 +219,10 @@ main {
     height: 38px;
 }
 
-    .logo-icon svg {
-        width: 100%;
-        height: auto;
-    }
+.logo-icon svg {
+    width: 100%;
+    height: auto;
+}
 
 /* Текстовые блоки хедера */
 .header-text {

@@ -14,9 +14,9 @@ const MONTHS = [
 ];
 
 function showPosts(posts) {
-  const main = document.querySelector("main");
-  const sample = main.querySelector("#post-sample");
-  for (const postEl of main.querySelectorAll(".post")) {
+  const rc = document.querySelector(".rounded-content");
+  const sample = rc.querySelector("#post-sample");
+  for (const postEl of rc.querySelectorAll(".post")) {
     if (postEl.id != "post-sample") {
       postEl.remove();
     }
@@ -88,7 +88,7 @@ function showPosts(posts) {
       }
     }
     postEl.querySelector("p").textContent = post.text;
-    main.appendChild(postEl);
+    rc.appendChild(postEl);
   }
 }
 
