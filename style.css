@@ -251,3 +251,228 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+/* Левая колонка страницы*/
+
+.calendar-scroll {
+    position: fixed;
+    top: 70px;
+    left: 50px;
+    width: 370px;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    padding: 60px 0 20px 0;
+
+    padding-right: 4px;
+    margin-right: -4px;
+
+    /* Скрытие по умолчанию */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.calendar-scroll::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+/* При наведении показываем скроллбар */
+.calendar-scroll:hover {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.calendar-scroll:hover::-webkit-scrollbar {
+    width: 4px;
+}
+
+.calendar-scroll:hover::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.calendar-scroll:hover::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.calendar-scroll:hover::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+
+/* Один месяц */
+
+.calendar {
+    width: 344px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Градиентная рамка вокруг каждого месяца (слева, справа, снизу) */
+.calendar {
+    position: relative;
+}
+
+.calendar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 0 0 30px 30px;
+    padding: 2px;
+
+    background: radial-gradient(
+        circle at 0% 100%,
+        #000000 0%,
+        rgba(0, 0, 0, 0.5) 20%,
+        transparent 55%
+    );
+
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+}
+
+/* Заплатка — перекрывает верхнюю линию рамки под плашкой */
+.calendar::before {
+    content: '';
+    position: absolute;
+    top: 42px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #FFFFFF;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Заголовок-плашка («сентябрь 2026»)*/
+
+.calendar__header {
+    width: 344px;
+    height: 42px;
+    background: #5300D6;
+    color: #FFFFFF;
+    font-family: "Montserrat", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    border-radius: 30px 30px 0 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Сетка дней (7 колонок)---- */
+
+.calendar__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+    padding-top: 10px;
+    row-gap: 6px;
+}
+
+
+/* Одна ячейка-день*/
+
+.calendar__day {
+    pointer-events: none;
+    width: 45px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #000000;
+    line-height: 1;
+
+    border-radius: 50%;
+    transition: background 0.15s ease;
+}
+
+.calendar__day--empty {
+    cursor: default;
+}
+
+
+/* Состояние: день с мероприятием (обводка)*/
+
+.calendar__day--event {
+    cursor: pointer;
+    position: relative;
+    pointer-events: all;
+}
+
+.calendar__day--event::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: 2px;
+    pointer-events: none;
+
+    background: linear-gradient(
+        to bottom right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        #000000 100%
+    );
+
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+
+}
+
+
+/*
+   Состояние: выбранный день (оранжевый круг)
+   Идёт ПОСЛЕ --event, чтобы перекрывать обводку
+*/
+
+.calendar__day--selected {
+    background: #EA591F;
+    color: #FFFFFF;
+}
+
+/* Скрыть градиентную обводку у выбранного дня */
+.calendar__day--selected::after {
+    display: none;
+}
+
+
+/* Hover */
+
+.calendar__day:not(.calendar__day--empty):not(.calendar__day--selected):hover {
+    background: #F2F2F2;
+}
+
+.calendar__day--selected:hover {
+    background: #EA591F;
+}
