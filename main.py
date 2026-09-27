@@ -152,7 +152,14 @@ def detect_dates(post: Post) -> list[PlainDate]:
                 next = words[i + 1]
                 month = parse_month(next)
                 if month != -1:
-                    result.append(PlainDate(0, month, day))
+                    year = 0
+                    if i + 2 < len(words):
+                        then = words[i + 1]
+                        if then.isdecimal():
+                            maybe_year = int(then)
+                            if 1800 <= maybe_year <= 2100:
+                                year = maybe_year
+                    result.append(PlainDate(year, month, day))
     return result
 
 
