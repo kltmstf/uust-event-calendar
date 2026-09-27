@@ -33,7 +33,7 @@ body {
     cursor: pointer;
     color: #222;
     font-weight: 500;
-    transition: color .3s;
+    transition: color 0.3s;
 }
 
 /* Круглые переключатели */
@@ -97,7 +97,7 @@ body {
         font-size: 40px;
         font-weight: 600;
         margin-bottom: 30px;
-        transition: color .3s;
+        transition: color 0.3s;
         &:hover {
             color: #ea591f;
         }
@@ -115,14 +115,14 @@ body {
             top: 0;
             bottom: 0;
             width: 70px;
-            background-color: #FFFFFF80;
+            background-color: #ffffff80;
             background-position: center;
             background-repeat: no-repeat;
             backdrop-filter: blur(4px);
             z-index: 4;
 
             opacity: 0;
-            transition: opacity .5s;
+            transition: opacity 0.5s;
         }
         .filter {
             position: absolute;
@@ -131,12 +131,14 @@ body {
             width: 100%;
             height: 100%;
             z-index: 3;
-            backdrop-filter:  blur(40px);
+            backdrop-filter: blur(40px);
         }
         img {
             width: 660px;
             height: 380px;
-            transition: left .5s linear, opacity .5s;
+            transition:
+                left 0.5s linear,
+                opacity 0.5s;
             opacity: 1;
         }
         .images {
@@ -148,7 +150,7 @@ body {
             display: flex;
             flex-direction: row;
             z-index: 3;
-            transition: left .5s linear;
+            transition: left 0.5s linear;
             img {
                 object-fit: contain;
             }
@@ -166,7 +168,7 @@ body {
                 left: 0;
                 opacity: 0;
                 object-fit: cover;
-                transition: opacity .5s;
+                transition: opacity 0.5s;
             }
         }
         &:hover {
@@ -175,11 +177,11 @@ body {
             }
         }
         .left {
-            background-image: url('./arrow-left.svg');
+            background-image: url("./arrow-left.svg");
             left: 0;
         }
         .right {
-            background-image: url('./arrow-right.svg');
+            background-image: url("./arrow-right.svg");
             right: 0;
         }
         margin-bottom: 30px;
@@ -235,4 +237,18 @@ body {
 
 .header-text-right {
     text-align: right;
+}
+
+.command-name {
+    position: fixed;
+    bottom: 46px;
+    right: 50px;
+    width: 210px;
+    height: 40px;
+    background-color: #ea591f;
+    color: #ffffff;
+    border-radius: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
