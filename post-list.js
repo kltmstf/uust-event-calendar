@@ -36,64 +36,46 @@ function showPosts(posts) {
     if (post.photos.length == 0) {
       photoEl.remove();
     } else {
-      let imgEl = photoEl.querySelector(".image");
-      let backgroundEl = photoEl.querySelector(".background");
-      function setImage(el, i) {
-        const normI = (i + post.photos.length) % post.photos.length;
-        el.setAttribute("src", post.photos[normI]);
-      }
-      let current = 0;
-      setImage(imgEl, current);
-      setImage(backgroundEl, current);
       const leftEl = photoEl.querySelector(".left");
       const rightEl = photoEl.querySelector(".right");
-      if (post.photos.length == 1) {
-        leftEl.remove();
-        rightEl.remove();
-      } else {
-        function rotate(dir) {
-          current += dir;
-          if (current < 0) {
-            current += post.photos.length;
-          }
-          if (current > post.photos.length) {
-            current -= post.photos.length;
-          }
-          const imgCopy = imgEl.cloneNode();
-          const backgroundCopy = backgroundEl.cloneNode();
-          imgCopy.addEventListener(
-            "load",
-            () => {
-              backgroundCopy.style.opacity = 0;
-              photoEl.appendChild(imgCopy);
-              photoEl.appendChild(backgroundCopy);
-              imgEl.style.left = dir == -1 ? "100%" : "-0%";
-              imgCopy.style.left = dir == -1 ? "-100%" : "100%";
-              setTimeout(() => {
-                imgCopy.style.left = "0%";
-                imgEl.style.left = dir == -1 ? "100%" : "-100%";
-                backgroundCopy.style.opacity = 1;
-                backgroundEl.style.opacity = 0;
-              }, 100);
-              setTimeout(() => {
-                imgEl.remove();
-                imgEl = imgCopy;
-                backgroundEl.remove();
-                backgroundEl = backgroundCopy;
-              }, 600);
-            },
-            { once: true },
-          );
-          setImage(imgCopy, current);
-          setImage(backgroundCopy, current);
+      const iContainer = photoEl.querySelector(".images");
+      const bContainer = photoEl.querySelector(".backgrounds");
+      for (const photo of post.photos) {
+        const img = new Image();
+        img.src = photo;
+        iContainer.appendChild(img);
+        bContainer.appendChild(img.cloneNode());
+      }
+      iContainer.style.width = post.photos.length + "00%";
+      let current = 0;
+      function setImage(i) {
+        if (i < 0 || i >= post.photos.length) {
+          return;
         }
-        let hovered = false;
+        bContainer.children[current].style.opacity = 0;
+        bContainer.children[i].style.opacity = 1;
+        iContainer.style.left = -i + "00%";
+        leftEl.hidden = i == 0;
+        rightEl.hidden = i == post.photos.length - 1;
+        current = i;
+      }
+      setImage(current);
 
+      if (post.photos.length != 1) {
+        let hovered = false;
+        let direction = 1;
         setInterval(() => {
-          if (!hovered) {
-            rotate(+1);
+          if (hovered) {
+            return;
           }
-        }, 10000);
+          if (current == 0) {
+            direction = 1;
+          }
+          if (current == post.photos.length - 1) {
+            direction = -1;
+          }
+          setImage(current + direction);
+        }, 5000);
 
         photoEl.addEventListener("mouseenter", () => {
           hovered = true;
@@ -101,8 +83,8 @@ function showPosts(posts) {
         photoEl.addEventListener("mouseleave", () => {
           hovered = false;
         });
-        leftEl.addEventListener("click", () => rotate(-1));
-        rightEl.addEventListener("click", () => rotate(+1));
+        leftEl.addEventListener("click", () => setImage(current - 1));
+        rightEl.addEventListener("click", () => setImage(current + 1));
       }
     }
     postEl.querySelector("p").textContent = post.text;
