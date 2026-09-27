@@ -31,7 +31,9 @@ function showPosts(posts) {
     } else {
       dateEl.remove();
     }
-    postEl.querySelector(".community-name").textContent = post.community_title;
+    const commEl = postEl.querySelector(".community-name");
+    commEl.textContent = post.community_title;
+    commEl.href = `https://vk.ru/wall-${post.community_id}_${post.post_id}`
     const photoEl = postEl.querySelector(".photo");
     if (post.photos.length == 0) {
       photoEl.remove();
@@ -100,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showPosts([
     {
       community: "career.uust",
+      community_id: 26195263,
       community_title: "Центр карьеры",
       photos: [
         "https://sun9-12.userapi.com/s/v1/ig2/kVlCzXR6so3LYolrLg2gdUApZWEcoDeRl-E8AB6FKCYi5gBcynNIrBSBFx10BAblIzjxhtPza2g1EGguUffXaYR1.jpg?quality=95&as=32x21,48x32,72x48,108x72,160x106,240x160,360x239,480x319,540x359,640x426,720x479,1080x718,1280x851,1440x958,2560x1703&from=bu&cs=640x0",
@@ -111,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       community: "uustufa",
+      community_id: 30836025,
       community_title: "УУНиТ",
       photos: [
         "https://sun9-56.userapi.com/s/v1/ig2/4Tnd4WpS5RW_5fMFnCHpfXL8k4zuR1zdZuqOS4OKuFl2AJvzswOtTjSKIv5qsRXLEmiIzY9NrsBOjU368yn_FB58.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280,1440x1440,2000x2000&from=bu&cs=2000x0",

@@ -26,6 +26,7 @@ class Event(TypedDict):
     photos: list[str]
     text: str
     community: str
+    community_id: int
     community_title: str
     post_id: int
 
@@ -63,6 +64,8 @@ COMMUNITIES = {
     "kampusufa": "Кампус",
     "21schoolufa": "Школа 21",
 }
+
+COMMUNITY_IDS = {}
 
 
 def get_posts_batch(community_id: int, offset: int, count: int) -> list[Post]:
@@ -121,9 +124,8 @@ def get_community_id(name: str) -> int:
     return data["response"]["object_id"]
 
 
-def load_community_posts(name: str) -> list[Post]:
-    id = get_community_id(name)
-    return get_posts_since(id, BEGIN_DATE)
+def load_community_posts(community: str) -> list[Post]:
+    return get_posts_since(COMMUNITY_IDS[community], BEGIN_DATE)
 
 
 def parse_month(word: str) -> int:
@@ -195,12 +197,13 @@ def event_from_post(community: str, post: Post) -> Event:
     return {
         "post_id": post["id"],
         "community": community,
+        "community_id": COMMUNITY_IDS[community],
         "community_title": COMMUNITIES[community],
         "text": post["text"],
         "photos": photos(post),
     }
 
-def add_posts(community: str, posts: list[Post], events: dict[int, dict[int, dict[int, list[Event]]]]):
+def add_posts(community: str,  posts: list[Post], events: dict[int, dict[int, dict[int, list[Event]]]]):
     for post in posts:
         for date in detect_dates(post):
             if date.year == 0:
@@ -211,6 +214,8 @@ def add_posts(community: str, posts: list[Post], events: dict[int, dict[int, dic
             day_events.append(event_from_post(community, post))
 
 events = {}
+for community in COMMUNITIES:
+    COMMUNITY_IDS[community] = get_community_id(community)
 for community in COMMUNITIES:
     print(community)
     add_posts(community, load_community_posts(community), events)
